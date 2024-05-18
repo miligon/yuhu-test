@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from .tasks import send_task_email
 
 class Tasks(models.Model):
     created_at = models.DateTimeField(verbose_name='Fecha de creacion:', auto_now_add=True)
@@ -11,6 +12,15 @@ class Tasks(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+    
+    def save(self, *args, **kwargs):
+        subscribe=False
+        if self.pk is None:
+            if Tasks.objects.filter(email=self.email).count() == 0:
+                subscribe=True
+        super().save(*args, **kwargs)
+        # Trigger the Celery task after the task is saved
+        send_task_email.delay(self.pk, self.title, self.content, self.email, subscribe)
 
     class Meta:
         verbose_name='Task'
