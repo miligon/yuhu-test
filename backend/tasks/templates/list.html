@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Lista </title>
+</head>
+
+<body>
+
+    <h1>Tasks</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>Numero de Tarea</td>
+                <td>Titulo</td>
+                <td>Descripcion</td>
+                <td>Inicio</td>
+                <td>Vencimiento</td>
+                <td>Email</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarea in tareas %}
+            <tr>
+                <td>{{ tarea.pk }}</td>
+                <td>{{ tarea.title }}</td>
+                <td>{{ tarea.content }}</td>
+                <td>{{ tarea.created_at }}</td>
+                <td>{{ tarea.overdue }}</td>
+                <td>{{ tarea.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>

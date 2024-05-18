@@ -2,9 +2,15 @@ from django.urls import path, include
 
 from rest_framework import routers
 
+from .views import *
 from .viewsets import *
 
 route = routers.SimpleRouter()
-route.register('tasks', TasksViewSet)
+route.register('api/tasks', TasksViewSet)
 
-urlpatterns = route.urls
+urlpatterns = route.urls + [
+    path('', main),
+    path('tasks', list_tasks, name='list_tasks'),
+    path('tasks/new/', create_task, name='create_task'),
+    path('tasks/edit/<int:pk>/', edit_task, name='edit_task'),
+]

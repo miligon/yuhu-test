@@ -5,6 +5,6 @@ from .models import *
 from .serializer import *
 
 class TasksViewSet(viewsets.ModelViewSet):
-    permission_classes = [DjangoModelPermissions]
+    #permission_classes = [DjangoModelPermissions]
     queryset = Tasks.objects.all()
     serializer_class = TaskSerializer
