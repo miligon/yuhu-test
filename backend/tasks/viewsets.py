@@ -9,7 +9,7 @@ class TasksViewSet(DisallowPatchMixin, mixins.CreateModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
-    #permission_classes = [DjangoModelPermissions]
+    permission_classes = [IsAuthenticated]
     queryset = Tasks.objects.all()
     serializer_class = TaskSerializer
 
