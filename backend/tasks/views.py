@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Tasks
+from .forms import TasksForm, TasksEditForm
 
 # Create your views here.
 def list_tasks(request):
@@ -11,10 +12,6 @@ def list_tasks(request):
 
 def main(request):
     return render(request, "index.html")
-
-from django.shortcuts import render, redirect
-from .models import Tasks
-from .forms import TasksForm
 
 def create_task(request):
     if request.method == 'POST':
@@ -30,11 +27,19 @@ def create_task(request):
 def edit_task(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.method == 'POST':
-        form = TasksForm(request.POST, instance=task)
+        form = TasksEditForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
             return redirect('list_tasks')  # Redirect to the list of tasks after saving
     else:
-        form = TasksForm(instance=task)
+        form = TasksEditForm(instance=task)
 
     return render(request, 'edit_task.html', {'form': form, 'task': task})
+
+
+def delete_task(request, pk):
+    task = get_object_or_404(Tasks, pk=pk)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('list_tasks')
+    return render(request, 'delete_task.html', {'task': task})

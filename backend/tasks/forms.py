@@ -10,3 +10,11 @@ class TasksForm(forms.ModelForm):
             'overdue': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'content': forms.Textarea(attrs={'maxlength': 500}),
         }
+
+class TasksEditForm(forms.ModelForm):
+    class Meta:
+        model = Tasks
+        fields = ['title', 'content',]
+        widgets = {
+            'content': forms.Textarea(attrs={'maxlength': 500}),
+        }

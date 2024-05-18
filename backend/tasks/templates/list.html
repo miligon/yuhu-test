@@ -1,40 +1,37 @@
-<!DOCTYPE html>
-<html>
+{% extends "index.html" %}
 
-<head>
-    <title>
-        Lista </title>
-</head>
+{% block title %}Gestor de tareas - Lista{% endblock %}
 
-<body>
+{% block content %}
+<h1>Lista de Tareas</h1>
+<table class="table">
+    <thead>
+        <tr class="table">
+            <th scope="col">Numero de Tarea</th>
+            <th scope="col">Title</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Inicio</th>
+            <th scope="col">Vencimiento</th>
+            <th scope="col">Email</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tarea in tareas %}
+        <tr>
+            <td>{{ tarea.pk }}</td>
+            <td>{{ tarea.title }}</td>
+            <td>{{ tarea.content }}</td>
+            <td>{{ tarea.created_at }}</td>
+            <td>{{ tarea.overdue }}</td>
+            <td>{{ tarea.email }}</td>
+            <td>
+                <a href="{% url 'edit_task' tarea.pk %}">Editar</a>
+                <a href="{% url 'delete_task' tarea.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-    <h1>Tasks</h1>
-    <table>
-        <thead>
-            <tr>
-                <td>Numero de Tarea</td>
-                <td>Titulo</td>
-                <td>Descripcion</td>
-                <td>Inicio</td>
-                <td>Vencimiento</td>
-                <td>Email</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tarea in tareas %}
-            <tr>
-                <td>{{ tarea.pk }}</td>
-                <td>{{ tarea.title }}</td>
-                <td>{{ tarea.content }}</td>
-                <td>{{ tarea.created_at }}</td>
-                <td>{{ tarea.overdue }}</td>
-                <td>{{ tarea.email }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-
-</body>
-
-</html>
+{% endblock %}

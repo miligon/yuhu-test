@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-<html>
+{% extends "index.html" %}
 
-<head>
-    <title>Create Task</title>
-</head>
+{% block title %}Gestor de tareas - Nuevo{% endblock %}
 
-<body>
-
-    <h1>Create Task</h1>
+{% block content %}
+    <h1>Crear Tarea</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <button type="submit">Guardar</button>
     </form>
 
 </body>
 
-</html>
+{% endblock %}

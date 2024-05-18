@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}Gestor de tareas - Eliminar{% endblock %}
+
+{% block content %}
+    <h1>Eliminar Tareas</h1>
+    <p>¿Esta seguro que desea eliminar "{{ task.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+        <a href="{% url 'list_tasks' %}">Cancelar</a>
+    </form>
+
+</body>
+
+{% endblock %}

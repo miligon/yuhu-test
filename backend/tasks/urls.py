@@ -12,5 +12,6 @@ urlpatterns = route.urls + [
     path('', main),
     path('tasks', list_tasks, name='list_tasks'),
     path('tasks/new/', create_task, name='create_task'),
+    path('tasks/delete/<int:pk>', delete_task, name='delete_task'),
     path('tasks/edit/<int:pk>/', edit_task, name='edit_task'),
 ]
