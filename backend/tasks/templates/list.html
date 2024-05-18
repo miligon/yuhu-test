@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>Lista de Tareas</h1>
-<a href="{% url 'create_task' %}">Nueva tarea</a>
+<a class="btn btn-primary" href="{% url 'create_task' %}">Nueva tarea</a>
 <table class="table">
     <thead>
         <tr class="table">
@@ -24,7 +24,11 @@
             <td>{{ tarea.title }}</td>
             <td>{{ tarea.content }}</td>
             <td>{{ tarea.created_at }}</td>
-            <td>{{ tarea.overdue }}</td>
+            {% if tarea.is_overdue %}
+                <td class="text-danger">{{ tarea.overdue }}</td>
+            {% else %}
+                <td>{{ tarea.overdue }}</td>
+            {% endif %}
             <td>{{ tarea.email }}</td>
             <td>
                 <a href="{% url 'edit_task' tarea.pk %}">Editar</a>

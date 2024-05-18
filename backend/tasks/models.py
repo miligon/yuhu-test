@@ -13,14 +13,21 @@ class Tasks(models.Model):
     def __str__(self):
         return f'{self.title}'
     
+    @property
+    def is_overdue(self):
+        return timezone.now() > self.overdue
+    
     def save(self, *args, **kwargs):
         subscribe=False
+        modified=False
         if self.pk is None:
             if Tasks.objects.filter(email=self.email).count() == 0:
                 subscribe=True
+        else:
+            modified=True
         super().save(*args, **kwargs)
         # Trigger the Celery task after the task is saved
-        send_task_email.delay(self.pk, self.title, self.content, self.email, subscribe)
+        send_task_email.delay(self.pk, self.title, self.content, self.email, subscribe, modified)
 
     class Meta:
         verbose_name='Task'
