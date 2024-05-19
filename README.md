@@ -32,4 +32,33 @@ su ID.
 
 ## Dependencias del proyecto:
 
-Se utilizó Django version 5.0.3 junto con python 3.12.0, PostgreSQL en su version 12.19 y Redis como backend para Celery
+Se utilizó Django version 5.0.3 junto con python 3.12.0, PostgreSQL en su version 12.19 y Redis como backend para Celery. El proyecto se empaqueto utilizando Docker para facilitar la instalacion del entorno de desarrollo y para facilitar el depliegue de la aplicación.
+
+### Para ejecutar el proyecto:
+
+1. Debe tener instalado docker
+2. Debe crear el archivo .env a partir del archivo de ejemplo .env-example
+3. Ejecute docker compose segun el entorno que desee ejecutar
+
+- entorno de desarrollo:
+ ```docker compose -f dockercompose.dev.yml up -d```
+- producción:
+ ```docker compose -f dockercompose.yml up -d```
+
+4. Ejecute las migraciones, recolecte los archivos estáticos y cree el superusuario:
+- desarrollo:
+```
+python manage.py migrate
+python manage.py collectstatic
+python manage.py createsuperuser
+```
+
+- producción:
+```
+docker-compose -f docker-compose.dev.yml exec web python manage.py migrate --noinput
+docker-compose -f docker-compose.dev.yml exec web python manage.py collectstatic --no-input
+docker-compose -f docker-compose.dev.yml exec web python manage.py createsuperuser
+```
+
+## Puede visualizar el proyecto en este dominio de prueba: [Yuhu Test](https://yuhu-test.lemonx.cloud/)
+
