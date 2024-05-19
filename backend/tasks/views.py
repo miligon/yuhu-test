@@ -2,21 +2,22 @@ from typing import Any
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.list import ListView
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Tasks
 from .forms import TasksForm, TasksEditForm
 
-class TaskView(ListView):
+class TaskView(LoginRequiredMixin, ListView):
     model = Tasks
     paginate_by = 10
+    ordering='-start_date'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["now"] = timezone.now()
         return context
 
-def main(request):
-    return render(request, "index.html")
-
+@login_required
 def create_task(request):
     if request.method == 'POST':
         form = TasksForm(request.POST)
@@ -28,6 +29,7 @@ def create_task(request):
 
     return render(request, 'create_task.html', {'form': form})
 
+@login_required
 def edit_task(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.method == 'POST':
@@ -40,7 +42,7 @@ def edit_task(request, pk):
 
     return render(request, 'edit_task.html', {'form': form, 'task': task})
 
-
+@login_required
 def delete_task(request, pk):
     task = get_object_or_404(Tasks, pk=pk)
     if request.method == 'POST':
