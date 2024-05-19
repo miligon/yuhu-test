@@ -31,7 +31,37 @@
     </nav>
 
     <div id="content">
-        {% block content %}{% endblock %}
+        {% block content %}
+        <h1>Desafio Yuhu: Sistema de Gestión de Tareas con Django y PostgreSQL</h1>
+        <p>El objetivo de este desafío es evaluar las habilidades del candidato en el desarrollo
+            de aplicaciones backend utilizando el framework Django en Python y una base de
+            datos PostgreSQL. Debes crear un sistema de gestión de tareas que permita a los
+            usuarios realizar las siguientes operaciones:
+        </p>
+        <ol>
+            <li>Crear una nueva tarea con un título, un email y una descripción.</li>
+            <li>Leer la lista de tareas existentes.</li>
+            <li>Actualizar una tarea existente (modificar el título o la descripción).</li>
+            <li>Eliminar una tarea existente.</li>
+        </ol>
+        <p>Requisitos:</p>
+        <ol>
+            <li>Utilizar el framework Django para crear la aplicación web.</li>
+            <li>Utilizar una base de datos PostgreSQL para almacenar las tareas.</li>
+            <li>Implementar vistas y modelos de Django para cada una de las operaciones
+                mencionadas anteriormente.</li>
+            <li>La aplicación debe manejar solicitudes HTTP GET, POST, PUT y DELETE.</li>
+            <li>Debe proporcionar una interfaz de usuario simple (puede ser una página
+                HTML, no se evaluará diseño).</li>
+            <li>El código debe estar bien estructurado y seguir las mejores prácticas de
+                desarrollo en Django.</li>
+        </ol>
+        <h1>API Pública</h1>
+        <p>Además de la interfaz de usuario, la aplicación debe proporcionar un API público
+        que permita a los desarrolladores interactuar con el sistema de gestión de tareas
+        utilizando solicitudes HTTP.</p>
+        <a href="/docs">Link a documentación de API</a>
+        {% endblock %}
     </div>
 </body>
 

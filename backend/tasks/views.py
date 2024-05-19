@@ -1,14 +1,18 @@
+from typing import Any
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic.list import ListView
+from django.utils import timezone
 from .models import Tasks
 from .forms import TasksForm, TasksEditForm
 
-# Create your views here.
-def list_tasks(request):
-    tareas = Tasks.objects.all()
-    context = {
-        'tareas' : tareas
-    }
-    return render(request, "list.html", context)
+class TaskView(ListView):
+    model = Tasks
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = timezone.now()
+        return context
 
 def main(request):
     return render(request, "index.html")

@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for tarea in tareas %}
+        {% for tarea in object_list %}
         <tr>
             <td>{{ tarea.pk }}</td>
             <td>{{ tarea.title }}</td>
@@ -38,5 +38,23 @@
         {% endfor %}
     </tbody>
 </table>
+<div>
+    {% if page_obj.has_previous %}
+      <a href="{% url 'list_tasks' %}?page={{ page_obj.previous_page_number }}">
+        <span>&laquo; Previous</span>
+      </a>
+    {% else %}
+      <span>&laquo; Previous</span>
+    {% endif %}
 
+      <span> | <span>
+
+    {% if page_obj.has_next %}
+      <a href="{% url 'list_tasks' %}?page={{ page_obj.next_page_number }}">
+        <span>Next &raquo;</span>
+      </a>
+    {% else %}
+      <span>Next &raquo;</span>
+    {% endif %}
+</div>
 {% endblock %}
