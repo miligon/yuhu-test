@@ -55,10 +55,13 @@ python manage.py createsuperuser
 
 - producción:
 ```
-docker-compose -f docker-compose.dev.yml exec web python manage.py migrate --noinput
-docker-compose -f docker-compose.dev.yml exec web python manage.py collectstatic --no-input
-docker-compose -f docker-compose.dev.yml exec web python manage.py createsuperuser
+docker compose -f dockercompose.dev.yml exec web python manage.py migrate --noinput
+docker compose -f dockercompose.dev.yml exec web python manage.py collectstatic --no-input
+docker compose -f dockercompose.dev.yml exec web python manage.py createsuperuser
 ```
 
 ## Puede visualizar el proyecto en este dominio de prueba: [Yuhu Test](https://yuhu-test.lemonx.cloud/)
+Las credenciales de prueba son:
+- user: test
+- password: test_password
 
