@@ -5,20 +5,59 @@ services:
     - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./backend/.env
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     restart: always
 
   redis:
       container_name: 'redis'
       image: 'redis'
-      ports:
-        - '0.0.0.0:6379:6379'
+      expose:
+        - "6379"
       volumes:
         - 'redis_data:/data'
       restart: always
+
+  web:
+    build: 
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    container_name: yuhu-test-backend
+    command: bash -c "gunicorn YuhuTest.wsgi:application --bind 0.0.0.0:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/backend
+      - static_files:/backend/static
+    expose:
+      - "8000"
+    depends_on:
+      - db
+
+  celery_worker:
+    build: 
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    container_name: worker
+    command: bash -c 'python -m celery -A YuhuTest worker --pool=solo -l info'
+    env_file:
+      - ./backend/.env
+    depends_on:
+    - redis
+    volumes:
+      - ./backend:/backend
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_files:/app/static
+    ports:
+      - 80:80
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
   rabbit_data:
   redis_data:
+  static_files:
