@@ -33,6 +33,7 @@ services:
       - "8000"
     depends_on:
       - db
+    restart: always
 
   celery_worker:
     build: 
@@ -46,6 +47,7 @@ services:
     - redis
     volumes:
       - ./backend:/backend
+    restart: always
 
   nginx:
     build: ./nginx
@@ -55,6 +57,7 @@ services:
       - 80:80
     depends_on:
       - web
+    restart: always
 
 volumes:
   postgres_data:
